@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\File;
 use Illuminate\Http\Request;
 
 class GeneralController extends Controller
@@ -9,7 +10,8 @@ class GeneralController extends Controller
 
     public function index()
     {
-        dd(111);
+
+        return view('formPage');
     }
 
     public function storeFile(Request $request)
@@ -17,37 +19,32 @@ class GeneralController extends Controller
         $request->validate([
             'type' => 'required'
         ]);
+        $this->upload($request, $request->type);
 
-        switch ($request->type) {
-            case 'video':
-                echo "i равно 0";
-                break;
-            case 'file':
-                echo "i равно 1";
-                break;
-            default:
-                echo "Error type file uploading";
-                break;
-        }
-
-
+        return redirect(route('mainPage'));
     }
 
-    public function upload(Request $request)
+    public function home()
+    {
+        return view('welcome');
+    }
+
+    public function upload(Request $request, $type)
     {
         $file = $request->file('upload');
-
-        $fileName =  $file->getFilename().'.' .$file->getClientOriginalExtension();
-        $file->storeAs('public/files',  $fileName);
-
+        $fileName = $file->getClientOriginalName();
+        $file->storeAs('public/files', $fileName);
         $file = new File;
-        $file->name = $file->getFilename();
+        $file->name = $this->unifier($fileName);
         $file->source = '/files/' . $fileName;
-        $file->extension = $file->getClientOriginalExtension();
-        $file->size = $file->getSize();
-
+        $file->extension = $request->file('upload')->getClientOriginalExtension();
+        $file->size = $request->file('upload')->getSize() / 1024; //KiloBytes
         $file->save();
+    }
 
-        return redirect(route('units.show', $request->unit_id));
+    public function unifier($string)
+    {
+        $res = explode('.', $string);
+        return $res[0].date(now()).'.'.$res[1];
     }
 }
