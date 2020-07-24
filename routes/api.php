@@ -31,5 +31,6 @@ Route::group([
 });
 
 Route::resources([
-    'video' => 'PostVideoController',
+    'post-video' => 'PostVideoController',
+    'post' => 'PostDocumentController',
 ]);
