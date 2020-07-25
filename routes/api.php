@@ -30,7 +30,4 @@ Route::group([
     Route::post('me', 'AuthController@me');
 });
 
-Route::resources([
-    'post-video' => 'PostVideoController',
-    'post' => 'PostDocumentController',
-]);
+Route::apiResource('post', 'PostController');

@@ -3,27 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Attachment extends Model
 {
+    public const UPLOAD_PATH = 'public/uploads';
+
     /**
      * @var array
      */
     protected $guarded = [];
 
-//    protected const RULES = [
-//        'name' => 'nullable|string',
-//        'file' => 'require|max:15000',
-//    ];
 
     /**
-     * @var bool
+     * @return MorphTo
      */
-    public $timestamps = false;
-
-    public function attachable()
+    public function attachable(): MorphTo
     {
         return $this->morphTo();
     }
-
 }

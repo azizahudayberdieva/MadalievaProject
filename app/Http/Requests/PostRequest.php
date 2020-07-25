@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Post;
 
-class PostVideoRequest extends AbstractRequest
+class PostRequest extends AbstractRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,9 @@ class PostVideoRequest extends AbstractRequest
     {
         $rules = Post::RULES;
 
-        $rules['file'] = 'required|mimes:mp4,flv|max:512000';
+        if (in_array($this->getMethod(), ['PUT', 'PATCH'])) {
+            $rules['attachment'] = 'mimes:docx,pdf,mp4,flv|max:512000';
+        }
 
         return $rules;
     }

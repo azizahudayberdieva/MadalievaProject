@@ -13,17 +13,17 @@ class Post extends Model
      * @const RULES
      */
     public const RULES = [
-        'name' => 'nullable|string',
+        'name' => 'required|string',
         'user_id' => 'required|exists:App\Models\User,id',
         'category_id' => 'required|exists:App\Models\Category,id',
-        'file' => 'required|mimes:docx,pdf|max:15000',
+        'attachment' => 'required|mimes:docx,pdf|max:15000',
         'description' => 'nullable|string|max:255'
     ];
 
     /**
      * @var string[]
      */
-    protected $fillable = ['*'];
+    protected $guarded = [];
 
     /**
      * @return BelongsTo
@@ -39,5 +39,10 @@ class Post extends Model
     public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function attachments()
+    {
+        return $this->morphMany(Attachment::class, 'attachable');
     }
 }
