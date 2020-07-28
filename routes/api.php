@@ -30,4 +30,7 @@ Route::group([
     Route::post('me', 'AuthController@me');
 });
 
-Route::apiResource('post', 'PostController');
+Route::apiResources([
+    'post' => 'PostController',
+    'category' => 'CategoryController'
+]);

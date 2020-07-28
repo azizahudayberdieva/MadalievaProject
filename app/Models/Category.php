@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
+    public const RULES = [
+        'name' => 'required|string',
+        'slug' => 'nullable|string',
+        'order' => 'nullable|integer',
+    ];
+
     /**
      * @return HasMany
      */
