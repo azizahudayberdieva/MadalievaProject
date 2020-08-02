@@ -14,11 +14,6 @@ class AttachmentResource extends JsonResource
      */
     public function toArray($request)
     {
-        $data = parent::toArray($request);
-
-        unset($data['attachable_type']);
-        unset($data['attachable_']);
-
-        return $data;
+        return parent::toArray($request);
     }
 }

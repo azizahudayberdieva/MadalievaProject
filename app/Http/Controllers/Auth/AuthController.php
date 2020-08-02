@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public $loginAfterSignUp = true;
     /**
      * Create a new AuthController instance.
      *
@@ -23,12 +25,15 @@ class AuthController extends Controller
     {
         $userInfo = $this->validate($request, [
             'name' => 'required',
-            'email' => 'required | email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required | min:2',
         ]);
-        $user->create($request->all());
 
-        return response()->json(['status' => 'success'], 200);
+        $user = $user->create($request->all());
+
+        $token = $this->guard()->login($user);
+
+        return $this->respondWithToken($token);
     }
 
     /**
@@ -56,7 +61,9 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json($this->guard()->user());
+        return response()->json([
+            'user' => $this->guard()->user()
+        ]);
     }
 
     /**
@@ -91,9 +98,10 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         return response()->json([
+            'user' => $this->guard()->user(),
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => $this->guard()->factory()->getTTL() * 60
+            'expires_in' => $this->guard()->factory()->getTTL() * 3600
         ]);
     }
 

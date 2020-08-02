@@ -54,10 +54,6 @@ class CategoryController extends Controller
     {
         $category->load('posts.attachments');
 
-        clock($category);
-
-
-        //dd($category);
         return new CategoryResource($category);
     }
 
@@ -69,7 +65,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        //Todo form builder for edit resource
     }
 
     /**
