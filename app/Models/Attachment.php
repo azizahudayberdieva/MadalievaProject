@@ -14,7 +14,7 @@ class Attachment extends Model
      */
     protected $guarded = [];
 
-
+    protected $dateFormat = 'Y-m-d h:m';
     /**
      * @return MorphTo
      */

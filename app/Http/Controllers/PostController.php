@@ -38,7 +38,7 @@ class PostController extends Controller
 
         return response()->json(
             [
-                'swtatus' => 'completed',
+                'message' => 'Запись добавлена',
                 'post' => new PostResource($post->load(['user', 'category', 'attachments']))
             ], 200);
     }
@@ -74,19 +74,18 @@ class PostController extends Controller
             );
         }
 
-        return response()->json(['status' => 'completed', 'message' => 'Post Updated'], 200);
+        return response()->json(['message' => 'Запись Обновлена'], 200);
     }
 
     /**
      * Deletes the given resource
      *
-     * @param $id
+     * @param Post $post
      * @return JsonResponse
+     * @throws \Exception
      */
-    public function destroy($id): JsonResponse
+    public function destroy(Post $post): JsonResponse
     {
-        $post = Post::findOrFail($id);
-
         $post->attachments->each(function ($attachment) {
             $attachment->delete();
         });

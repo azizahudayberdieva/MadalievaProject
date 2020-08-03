@@ -39,6 +39,7 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    protected $dateFormat = 'Y-m-d h:m';
     /**
      * @param $password
      */

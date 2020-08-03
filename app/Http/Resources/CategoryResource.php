@@ -14,12 +14,16 @@ class CategoryResource extends JsonResource
      */
     public function toArray($request)
     {
+        $posts = PostResource::collection($this->whenLoaded('posts'));
+        $posts = $posts ? $posts : [];
+
         return [
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
             'order' => $this->order,
-            'posts' => PostResource::collection($this->whenLoaded('posts')),
+            'count' => count( []),
+            'posts' => $posts,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];

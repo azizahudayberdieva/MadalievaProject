@@ -16,10 +16,11 @@ class Post extends Model
         'name' => 'required|string',
         'user_id' => 'required|exists:App\Models\User,id',
         'category_id' => 'required|exists:App\Models\Category,id',
-        'attachment' => 'required|mimes:docx,pdf|max:15000',
+        'attachment' => 'required|mimes:pptx,doc,docx,mp4,flv,video/mp4,max:5120000',
         'description' => 'nullable|string|max:255'
     ];
 
+    protected $dateFormat = 'Y-m-d h:m';
     /**
      * @var string[]
      */

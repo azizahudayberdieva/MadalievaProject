@@ -32,5 +32,6 @@ Route::group([
 
 Route::apiResources([
     'post' => 'PostController',
-    'category' => 'CategoryController'
+    'category' => 'CategoryController',
+    'user' => 'UserController'
 ]);

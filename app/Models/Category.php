@@ -13,6 +13,9 @@ class Category extends Model
         'order' => 'nullable|integer',
     ];
 
+    protected $dateFormat = 'Y-m-d H:m';
+
+    protected $guarded = [];
     /**
      * @return HasMany
      */
