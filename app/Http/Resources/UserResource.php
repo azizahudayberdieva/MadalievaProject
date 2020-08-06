@@ -18,8 +18,10 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'roles' => $this->getRoleNames(),
+            'posts' => PostResource::collection($this->whenLoaded('posts')),
             'created_at' => $this->created_at,
-            'posts' => PostResource::collection($this->whenLoaded('posts'))
+            'updated_at' => $this->updated_at
         ];
     }
 }

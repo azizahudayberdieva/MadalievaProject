@@ -62,7 +62,7 @@ class AuthController extends Controller
     public function me()
     {
         return response()->json([
-            'user' => $this->guard()->user()
+            'user' => new UserResource($this->guard()->user())
         ]);
     }
 
@@ -98,7 +98,7 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         return response()->json([
-            'user' => $this->guard()->user(),
+            'user' => new UserResource($this->guard()->user()),
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => $this->guard()->factory()->getTTL() * 3600
