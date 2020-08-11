@@ -1,5 +1,4 @@
 /node_modules
-/.idea/*
 /public/hot
 /public/storage
 /storage/*.key
@@ -11,3 +10,14 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+
+#barywidth ide helpers file
+/_ide_helper.php
+/_ide_helper_models.php
+/.phpstorm.meta.php
+
+#editor files
+.idea
+*.sublime-project
+*.sublime-workspace
+*.komodoproject
