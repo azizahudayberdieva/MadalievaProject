@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -11,15 +12,26 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $categories = factory(\App\Models\Category::class, 2)->create();
+        $adminRole = Role::create(['name' => 'Админ']);
+        $admin = factory(\App\Models\User::class)->create(
+            [
+                'name' => 'admin',
+                'email' => 'admin@gmail.com',
+                'password' => 'qwerty123'
+            ]
+        );
 
-        factory(\App\Models\User::class, 2)->create()->each(function ($user) use ($categories){
-            $categories->each(function ($category) use ($user){
-                factory(\App\Models\Post::class)->create([
-                    'user_id' => $user->id,
-                    'category_id' => $category->id
-                ]);
-            });
-        });
+        $userRole = Role::create(['name' => 'Подписчик']);
+        $user = factory(\App\Models\User::class)->create(
+            [
+                'name' => 'user',
+                'email' => 'user@gmail.com',
+                'password' => 'qwerty123'
+            ]
+        );
+
+        $admin->assignRole($adminRole);
+        $user->assignRole($userRole);
+
     }
 }
