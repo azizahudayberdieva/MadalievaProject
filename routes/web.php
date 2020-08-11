@@ -15,8 +15,7 @@ Route::get('/download', function () {
 
     if (file_exists($file)) {
         return Response::download($file);
-    } else {
-        abort(404);
     }
+
+    abort(404);
 });
-//->where('filename', '[A-Za-z0-9\-\_\.]+');

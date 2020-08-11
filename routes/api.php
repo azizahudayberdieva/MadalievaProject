@@ -35,3 +35,5 @@ Route::apiResources([
     'category' => 'CategoryController',
     'user' => 'UserController'
 ]);
+
+Route::get('/roles', 'RoleController@index');
