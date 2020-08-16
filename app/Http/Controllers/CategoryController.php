@@ -52,20 +52,9 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $category->load('posts.attachments');
+        $category->load('posts.media');
 
         return new CategoryResource($category);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //Todo form builder for edit resource
     }
 
     /**

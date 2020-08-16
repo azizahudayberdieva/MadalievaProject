@@ -18,7 +18,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        return PostResource::collection(Post::with('attachments')->get());
+        return PostResource::collection(Post::with('media')->get());
     }
     /**
      * Store a new resource
@@ -30,16 +30,12 @@ class PostController extends Controller
     {
         $post = Post::create($request->except('attachment'));
 
-        $attachment = $request->file('attachment');
-
-        $post->attachments()->saveMany(
-            (new AttachmentController($attachment))->store()
-        );
+        $post->addMedia($request->file('attachment'))->toMediaCollection('files');
 
         return response()->json(
             [
                 'message' => 'Запись добавлена',
-                'post' => new PostResource($post->load(['user', 'category', 'attachments']))
+                'post' => new PostResource($post->load(['user', 'category', 'media']))
             ], 200);
     }
 
@@ -49,7 +45,7 @@ class PostController extends Controller
      */
     public function show($id): PostResource
     {
-        $post = Post::findOrFail($id)->load(['user', 'category', 'attachments']);
+        $post = Post::findOrFail($id)->load(['user', 'category', 'media']);
         return new PostResource($post);
     }
 
@@ -64,14 +60,8 @@ class PostController extends Controller
     {
         $post->fill($request->except('attachment'))->save();
 
-        //Todo allow to remove attachment
         if ($request->hasFile('attachment')) {
-
-            $attachment = $request->file('attachment');
-
-            $post->attachments()->saveMany(
-                (new AttachmentController($attachment))->store()
-            );
+            $post->updateMedia($request->file('attachment'), 'files');
         }
 
         return response()->json(['message' => 'Запись Обновлена'], 200);
@@ -82,16 +72,17 @@ class PostController extends Controller
      *
      * @param Post $post
      * @return JsonResponse
-     * @throws \Exception
      */
     public function destroy(Post $post): JsonResponse
     {
-        $post->attachments->each(function ($attachment) {
-            $attachment->delete();
+        $media = $post->media;
+
+        $media->each(function ($attachment) use ($post) {
+            $post->deleteMedia($attachment->id);
         });
 
         $post->delete();
 
-        return response()->json(['status' => 'completed', 'message' => 'Post Deleted'], 200);
+        return response()->json(['message' => 'Запись удаленна'], 200);
     }
 }
