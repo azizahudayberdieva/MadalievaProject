@@ -9,8 +9,8 @@ class Category extends Model
 {
     public const RULES = [
         'name' => 'required|string',
-        'slug' => 'nullable|string',
         'order' => 'nullable|integer',
+        'parent_id' => 'nullable|integer',
     ];
 
     protected $dateFormat = 'Y-m-d H:m';
@@ -22,5 +22,15 @@ class Category extends Model
     public function posts() : HasMany
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'id', 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Category::class,  'parent_id', 'id');
     }
 }

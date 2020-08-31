@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
         $admin = factory(\App\Models\User::class)->create(
             [
                 'name' => 'admin',
+                //'text' => 'Админ',
                 'email' => 'admin@gmail.com',
                 'password' => 'qwerty123'
             ]
@@ -25,6 +26,7 @@ class UserSeeder extends Seeder
         $user = factory(\App\Models\User::class)->create(
             [
                 'name' => 'user',
+                //'text' => 'Подписчик',
                 'email' => 'user@gmail.com',
                 'password' => 'qwerty123'
             ]

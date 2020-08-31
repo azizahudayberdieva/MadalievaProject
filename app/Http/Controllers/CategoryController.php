@@ -15,33 +15,39 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return CategoryResource::collection(Category::with('posts')->get());
+        if (request()->with_children) {
+            $category = Category::with(['posts', 'children'])
+                ->where('parent_id', '=', NULL)
+                ->get();
+        }else {
+            $category = Category::with(['posts'])->get();
+        }
+
+        return CategoryResource::collection($category);
     }
 
     /**
      * Show the form for creating a new resource.
      *
      * @param CategoryRequest $request
-     * @return CategoryResource
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create(CategoryRequest $request)
     {
-        $category = Category::create($request->validated());
 
-        return new CategoryResource($category);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param CategoryRequest $request
-     * @return CategoryResource
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(CategoryRequest $request)
     {
-        $category = Category::create($request->validated());
+        Category::create($request->validated());
 
-        return new CategoryResource($category);
+        return response()->json(['message' => 'Катеория добавлена'], 200);
     }
 
     /**
@@ -52,8 +58,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $category->load('posts.media');
-
+        $category->load('posts');
         return new CategoryResource($category);
     }
 

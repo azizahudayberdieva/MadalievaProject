@@ -18,7 +18,25 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        return PostResource::collection(Post::with('media')->get());
+        $posts = Post::with('media');
+
+        if ($request->category_id) {
+            //$posts = $posts->where('category_id', $request->category_id);
+            $posts->whereHas('category', function ($q) use ($request){
+               $q->where('id', $request->category_id);;
+               $q->orWhere('parent_id', $request->category_id);;
+            });
+        }
+
+        if ($request->mime_type) {
+            $posts->whereHas('media', function ($q) use ($request) {
+                $q->whereIn('mime_type', $request->mime_type);
+            });
+        }
+
+        $posts = $posts->get();
+
+        return PostResource::collection($posts);
     }
     /**
      * Store a new resource
