@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Forms\PostForm;
 use App\Http\Requests\PostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
@@ -10,20 +11,13 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    /**
-     * Get a list of resources
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
     public function index(Request $request)
     {
-        $posts = Post::with('media');
+        $posts = Post::with(['category', 'media']);
 
         if ($request->category_id) {
-            //$posts = $posts->where('category_id', $request->category_id);
             $posts->whereHas('category', function ($q) use ($request){
-               $q->where('id', $request->category_id);;
+               $q->where('id', $request->category_id);
                $q->orWhere('parent_id', $request->category_id);;
             });
         }
@@ -38,12 +32,12 @@ class PostController extends Controller
 
         return PostResource::collection($posts);
     }
-    /**
-     * Store a new resource
-     *
-     * @param PostRequest $request
-     * @return JsonResponse
-     */
+
+    public function create(PostForm $form)
+    {
+        return response()->json(['form' => $form->get()]);
+    }
+
     public function store(PostRequest $request): JsonResponse
     {
         $post = Post::create($request->except('attachment'));
@@ -57,23 +51,17 @@ class PostController extends Controller
             ], 200);
     }
 
-    /**
-     * @param $id
-     * @return PostResource
-     */
     public function show($id): PostResource
     {
         $post = Post::findOrFail($id)->load(['user', 'category', 'media']);
         return new PostResource($post);
     }
 
-    /**
-     * Updates the given resource
-     *
-     * @param PostRequest $request
-     * @param Post $post
-     * @return JsonResponse
-     */
+    public function edit(Post $post,PostForm $form)
+    {
+        return response()->json(['form' => $form->fill($post)->get()]);
+    }
+
     public function update(PostRequest $request, Post $post)
     {
         $post->fill($request->except('attachment'))->save();
@@ -85,12 +73,6 @@ class PostController extends Controller
         return response()->json(['message' => 'Запись Обновлена'], 200);
     }
 
-    /**
-     * Deletes the given resource
-     *
-     * @param Post $post
-     * @return JsonResponse
-     */
     public function destroy(Post $post): JsonResponse
     {
         $media = $post->media;

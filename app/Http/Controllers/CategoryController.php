@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Forms\CategoryForm;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
     public function index()
     {
+        //Todo implement pagination
         if (request()->with_children) {
             $category = Category::with(['posts', 'children'])
                 ->where('parent_id', '=', NULL)
@@ -26,23 +23,11 @@ class CategoryController extends Controller
         return CategoryResource::collection($category);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @param CategoryRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function create(CategoryRequest $request)
+    public function create(CategoryForm $form)
     {
-
+        return response()->json(['form' => $form->get()]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param CategoryRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function store(CategoryRequest $request)
     {
         Category::create($request->validated());
@@ -50,25 +35,17 @@ class CategoryController extends Controller
         return response()->json(['message' => 'Катеория добавлена'], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Category $category
-     * @return CategoryResource
-     */
     public function show(Category $category)
     {
         $category->load('posts');
         return new CategoryResource($category);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param CategoryRequest $request
-     * @param Category $category
-     * @return Category
-     */
+    public function edit(Category $category, CategoryForm $form)
+    {
+        return response()->json(['form' => $form->fill($category)->get()]);
+    }
+
     public function update(CategoryRequest $request, Category $category)
     {
         $category->fill($request->validated())->save();
@@ -78,13 +55,6 @@ class CategoryController extends Controller
         return $category;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Category $category
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
-     */
     public function destroy(Category $category)
     {
         $category->delete();

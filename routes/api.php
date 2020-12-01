@@ -30,10 +30,10 @@ Route::group([
     Route::post('me', 'AuthController@me');
 });
 
-Route::apiResources([
-    'post' => 'PostController',
-    'category' => 'CategoryController',
-    'user' => 'UserController'
+Route::resources([
+    'posts' => 'PostController',
+    'categories' => 'CategoryController',
+    'users' => 'UserController'
 ]);
 
 Route::get('/roles', 'RoleController@index');

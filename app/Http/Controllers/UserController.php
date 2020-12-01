@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Forms\UserForm;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -51,6 +52,10 @@ class UserController extends Controller
         return response()->json(['message' => 'Пользователь создан'], 200);
     }
 
+    public function create(UserForm $form)
+    {
+        return response()->json(['form' => $form->get()]);
+    }
     /**
      * Display the specified resource.
      *
@@ -95,6 +100,10 @@ class UserController extends Controller
         return response()->json(['message' => 'Пользователь обновлен'], 200);
     }
 
+    public function edit(User $user, UserForm $form)
+    {
+        return $form->fill($user)->get();
+    }
     /**
      * Remove the specified resource from storage.
      *
