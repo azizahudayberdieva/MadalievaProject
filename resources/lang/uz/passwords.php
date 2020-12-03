@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Password Reset Language Lines
@@ -13,10 +12,9 @@ return [
     |
     */
 
-    'reset' => 'Your password has been reset!',
-    'sent' => 'We have emailed your password reset link!',
-    'throttled' => 'Please wait before retrying.',
-    'token' => 'This password reset token is invalid.',
-    'user' => "We can't find a user with that email address.",
-
+    'reset'     => 'Sizning parolingiz tiklandi!',
+    'sent'      => 'Parolni tiklash havolasini elektron pochta orqali yubordik!',
+    'throttled' => 'Iltimos birozdan so‘ng qayta urinib ko‘ring.',
+    'token'     => 'Ushbu parolni qayta tiklash kodi noto‘g‘ri.',
+    'user'      => 'Ushbu elektron pochta manziliga ega foydalanuvchi topilmadi.',
 ];

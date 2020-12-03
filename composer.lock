@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ca97043caa68f68c143a2b695613654d",
+    "content-hash": "c5b9a29c9a16dd85c748509cb621e386",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1268,6 +1268,47 @@
                 }
             ],
             "time": "2020-09-17T19:21:25+00:00"
+        },
+        {
+            "name": "laravel-lang/lang",
+            "version": "8.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Laravel-Lang/lang.git",
+                "reference": "a453760fec76a52b2c7eb13ecbdb5eefc2ab0cd3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Laravel-Lang/lang/zipball/a453760fec76a52b2c7eb13ecbdb5eefc2ab0cd3",
+                "reference": "a453760fec76a52b2c7eb13ecbdb5eefc2ab0cd3",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*"
+            },
+            "suggest": {
+                "andrey-helldar/laravel-lang-publisher": "Easy installation and update of translation files for your project",
+                "arcanedev/laravel-lang": "Translations manager and checker for Laravel 5",
+                "overtrue/laravel-lang": "Command to add languages in your project"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Laravel-Lang Team"
+                }
+            ],
+            "description": "Languages for Laravel",
+            "keywords": [
+                "lang",
+                "languages",
+                "laravel",
+                "lpm"
+            ],
+            "time": "2020-11-30T21:13:00+00:00"
         },
         {
             "name": "laravel/framework",

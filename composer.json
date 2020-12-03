@@ -20,6 +20,7 @@
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "itsgoingd/clockwork": "^4.1",
+        "laravel-lang/lang": "~8.0",
         "laravel/framework": "^8.0",
         "laravel/legacy-factories": "^1.1",
         "laravel/tinker": "^2.0",

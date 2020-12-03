@@ -24,12 +24,12 @@ class AuthController extends Controller
     public function register(Request $request, User $user)
     {
         $userInfo = $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required | min:2',
+            'name' => ['required'],
+            'email' => ['required', 'email', 'unique:users'],
+            'password' => ['required','min:2'],
         ]);
 
-        $user = $user->create($request->all());
+        $user = $user->create($userInfo);
 
         $token = $this->guard()->login($user);
 

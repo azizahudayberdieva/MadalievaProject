@@ -11,17 +11,17 @@ class CategoryForm extends AbstractForm
     protected function buildForm()
     {
         $this->formBuilder
-            ->add('text', 'name', 'Имя',
+            ->add('text', 'name', trans('admin_panel.categories.title'),
                 [
                     'validationRule' => 'required',
                 ]);
 
-        $this->formBuilder->add('treeselect', 'parent_id', 'Родительская категория',
+        $this->formBuilder->add('treeselect', 'parent_id', trans('admin_panel.categories.parent_cat'),
             [
                 'options' => $this->getParentCategories()
             ]);
 
-        $this->formBuilder->add('number', 'order', 'Порядок');
+        $this->formBuilder->add('number', 'order', trans('admin_panel.order'));
     }
 
     private function getParentCategories()

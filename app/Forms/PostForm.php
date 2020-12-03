@@ -11,7 +11,7 @@ class PostForm extends AbstractForm
     protected function buildForm()
     {
         $this->formBuilder
-            ->add('text', 'name', 'Заголовок',
+            ->add('text', 'name', trans('admin_panel.posts.name'),
                 [
                     'validationRule' => 'required',
                     'attributes' => [
@@ -20,27 +20,32 @@ class PostForm extends AbstractForm
                     ]
                 ]);
 
-        $this->formBuilder->add('treeselect', 'category_id', 'Категория',
+        $this->formBuilder->add('treeselect', 'category_id', trans('admin_panel.categories.single'),
             [
+                'validationRule' => 'required',
                 'options' => $this->getParentCategories(),
                 'attributes' => [
+                    'placeholder' => '',
                     'outlined' => true,
                     'cols' => 6,
                 ]
             ]);
-        $this->formBuilder->add('textarea', 'excerpt', 'Краткое описание', [
+        $this->formBuilder->add('textarea', 'excerpt', trans('admin_panel.posts.short_description'), [
+            'validationRule' => 'required',
             'attributes' => [
                 'outlined' => true
             ]
         ]);
 
-        $this->formBuilder->add('textarea', 'full_description', 'Полное описание', [
+        $this->formBuilder->add('textarea', 'full_description', trans('admin_panel.posts.full_description'), [
+            'validationRule' => 'required',
             'attributes' => [
                 'outlined' => true
             ]
         ]);
 
-        $this->formBuilder->add('file', 'attachment', 'Файлы', [
+        $this->formBuilder->add('file', 'attachment', trans('admin_panel.posts.file'), [
+            'validationRule' => 'required',
             'attributes' => [
                 'cols' => 6
             ]

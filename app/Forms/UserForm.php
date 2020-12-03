@@ -13,27 +13,27 @@ class UserForm extends AbstractForm
     protected function buildForm()
     {
         $this->formBuilder
-            ->add('text', 'name', 'Имя',
+            ->add('text', 'name', trans('admin_panel.users.name'),
                 [
                     'validationRule' => 'required',
                 ]);
 
         $this->formBuilder
-            ->add('email', 'email', 'Электронная почта',
+            ->add('email', 'email', trans('admin_panel.users.email'),
                 [
                     'validationRule' => 'required|email',
                 ]
             );
 
         $this->formBuilder
-            ->add('password', 'password', 'Пароль',
+            ->add('password', 'password', trans('admin_panel.users.password'),
                 [
                     'validationRule' => 'required|min:6',
                 ]
             );
 
         $this->formBuilder
-            ->add('select', 'role', 'Роль',
+            ->add('select', 'role', trans('admin_panel.users.role'),
                 [
                     'options' => $this->getUserRoles(),
                     'validationRule' => 'required',

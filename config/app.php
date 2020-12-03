@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'GMT+5',
 
     /*
     |--------------------------------------------------------------------------
@@ -80,8 +80,18 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'ru',
 
+    'supported_locales' => [
+        [
+            'title'      => 'Uzbek',
+            'short_code' => 'uz',
+        ],
+        [
+            'title'      => 'Русский',
+            'short_code' => 'ru',
+        ],
+    ],
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
