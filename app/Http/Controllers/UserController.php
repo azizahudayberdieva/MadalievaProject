@@ -102,7 +102,7 @@ class UserController extends Controller
 
     public function edit(User $user, UserForm $form)
     {
-        return $form->fill($user)->get();
+        return response()->json(['form' => $form->fill($user)->get()]);
     }
     /**
      * Remove the specified resource from storage.

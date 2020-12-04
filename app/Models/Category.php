@@ -16,21 +16,22 @@ class Category extends Model
     protected $dateFormat = 'Y-m-d H:m';
 
     protected $guarded = [];
+
     /**
      * @return HasMany
      */
-    public function posts() : HasMany
+    public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
     }
 
     public function parent()
     {
-        return $this->belongsTo(Category::class, 'id', 'parent_id');
+        return $this->belongsTo(Category::class, 'id', 'parent_id')->orderBy('order');
     }
 
     public function children()
     {
-        return $this->hasMany(Category::class,  'parent_id', 'id');
+        return $this->hasMany(Category::class, 'parent_id', 'id')->orderBy('order');
     }
 }

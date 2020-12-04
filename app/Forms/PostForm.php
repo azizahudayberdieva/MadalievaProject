@@ -2,6 +2,7 @@
 
 namespace App\Forms;
 
+use App\Models\Category;
 use App\Models\Post;
 
 class PostForm extends AbstractForm
@@ -23,9 +24,9 @@ class PostForm extends AbstractForm
         $this->formBuilder->add('treeselect', 'category_id', trans('admin_panel.categories.single'),
             [
                 'validationRule' => 'required',
-                'options' => $this->getParentCategories(),
+                'options' => $this->getCategoriesWithChildren(),
                 'attributes' => [
-                    'placeholder' => '',
+                    'placeholder' => trans('admin_panel.categories.single'),
                     'outlined' => true,
                     'cols' => 6,
                 ]
@@ -52,15 +53,35 @@ class PostForm extends AbstractForm
         ]);
     }
 
-    private function getParentCategories()
+    private function getCategoriesWithChildren()
     {
-        // Todo implement getParentCategories method
-        return [];
+        return Category::with('children')->where('parent_id', '=', null)->get()
+            ->map(function ($cat) {
+                $data = [
+                    'id' => $cat->id,
+                    'name' => $cat->name
+                ];
+
+                if ($cat->children->isNotEmpty()) {
+                    $data['children'] = $cat->children->map(function ($childCat) {
+                        return [
+                            'id' => $childCat->id,
+                            'name' => $childCat->name
+                        ];
+                    });
+                }
+
+                return $data;
+            })
+            ->toArray();
     }
 
     public function fill(Post $post)
     {
-        // Todo implement fill method
+        foreach ($this->formBuilder->getFields() as $field) {
+            $field->setValue($post->{$field->getName()});
+        }
+
         return $this;
     }
 }

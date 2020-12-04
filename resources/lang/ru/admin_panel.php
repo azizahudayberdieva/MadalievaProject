@@ -51,7 +51,11 @@ return [
     ],
     'attachments' => [
         'drag_files_here' => 'Перетащите файлы сюда',
-        'lists' => 'Медиа файлы',
+        'list' => 'Медиа файлы',
         'file_extension' => 'Расширение файла',
-    ]
+    ],
+    'roles' => [
+      'admin' => 'Администратор',
+      'subscriber' => 'Подписчик'
+    ],
 ];

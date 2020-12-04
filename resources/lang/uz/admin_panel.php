@@ -51,7 +51,11 @@ return [
     ],
     'attachments' => [
         'drag_files_here' => 'Fayllarni bu erga torting',
-        'lists' => 'Media fayllar',
+        'list' => 'Media fayllar',
         'file_extension' => 'Fayl kengaytmasi',
-    ]
+    ],
+    'roles' => [
+        'admin' => 'Ma\'mur',
+        'subscriber' => 'Abonent'
+    ],
 ];

@@ -3,6 +3,7 @@
 namespace App\Forms;
 
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class UserForm extends AbstractForm
 {
@@ -42,13 +43,30 @@ class UserForm extends AbstractForm
 
     private function getUserRoles()
     {
-        // Todo implement getUserRoles method
-        return [];
+        return  Role::all()->map(function($role) {
+            return [
+                'id' => $role->id,
+                'name' => trans("admin_panel.roles.$role->name"),
+            ];
+        });
     }
 
     public function fill(User $user)
     {
-        // Todo implement fill method
+        foreach ($this->formBuilder->getFields() as $field) {
+            if ($value = $user->{$field->getName()}) {
+                $field->setValue($value);
+            }
+            if ($field->getName() === 'role') {
+                $role = $user->roles->first()->id;
+                $field->setValue($role);
+            }
+            if ($field->getName() === 'password') {
+                $field->setValidationRule('');
+                $field->setValue('');
+            }
+        }
+
         return $this;
     }
 }
