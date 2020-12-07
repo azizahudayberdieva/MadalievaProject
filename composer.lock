@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c5b9a29c9a16dd85c748509cb621e386",
+    "content-hash": "0cd5160662a5d9b804d227f2d6cfd1fa",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3161,16 +3161,16 @@
         },
         {
             "name": "saodat/formbase",
-            "version": "v3.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/saodat1998/formbase-laravel-package.git",
-                "reference": "bc5908e8ac45df01c71e40db59c397e71c60eab2"
+                "reference": "d9b52414132ed37b32bb12d5b09774c54207c672"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/saodat1998/formbase-laravel-package/zipball/bc5908e8ac45df01c71e40db59c397e71c60eab2",
-                "reference": "bc5908e8ac45df01c71e40db59c397e71c60eab2",
+                "url": "https://api.github.com/repos/saodat1998/formbase-laravel-package/zipball/d9b52414132ed37b32bb12d5b09774c54207c672",
+                "reference": "d9b52414132ed37b32bb12d5b09774c54207c672",
                 "shasum": ""
             },
             "require": {
@@ -3227,10 +3227,10 @@
                 "saodat"
             ],
             "support": {
-                "source": "https://github.com/saodat1998/formbase-laravel-package/tree/v3",
+                "source": "https://github.com/saodat1998/formbase-laravel-package/tree/master",
                 "issues": "https://github.com/saodat1998/formbase-laravel-package/issues"
             },
-            "time": "2020-11-07T16:50:45+00:00"
+            "time": "2020-12-07T05:14:54+00:00"
         },
         {
             "name": "spatie/image",
