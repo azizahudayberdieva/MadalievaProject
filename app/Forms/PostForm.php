@@ -2,11 +2,14 @@
 
 namespace App\Forms;
 
+use App\Forms\Traits\LocaleTrait;
 use App\Models\Category;
 use App\Models\Post;
 
 class PostForm extends AbstractForm
 {
+    use LocaleTrait;
+
     protected $fieldsDefinitions = [];
 
     protected function buildForm()
@@ -17,7 +20,6 @@ class PostForm extends AbstractForm
                     'validationRule' => 'required',
                     'attributes' => [
                         'outlined' => true,
-                        'cols' => 6,
                     ]
                 ]);
 
@@ -31,6 +33,18 @@ class PostForm extends AbstractForm
                     'cols' => 6,
                 ]
             ]);
+
+        $this->formBuilder->add('select', 'locale', trans('admin_panel.languages.single'),
+            [
+                'validationRule' => 'required',
+                'options' => $this->getAppLocales(),
+                'attributes' => [
+                    'placeholder' => trans('admin_panel.languages.select'),
+                    'outlined' => true,
+                    'cols' => 6,
+                ]
+            ]);
+
         $this->formBuilder->add('textarea', 'excerpt', trans('admin_panel.posts.short_description'), [
             'validationRule' => 'required',
             'attributes' => [
@@ -46,7 +60,7 @@ class PostForm extends AbstractForm
         ]);
 
         $this->formBuilder->add('file', 'attachment', trans('admin_panel.posts.file'), [
-            'validationRule' => 'required',
+            //'validationRule' => 'required',
             'attributes' => [
                 'cols' => 6
             ]

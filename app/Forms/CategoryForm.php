@@ -2,10 +2,13 @@
 
 namespace App\Forms;
 
+use App\Forms\Traits\LocaleTrait;
 use App\Models\Category;
 
 class CategoryForm extends AbstractForm
 {
+    use LocaleTrait;
+
     protected $fieldsDefinitions = [];
 
     protected function buildForm()
@@ -19,6 +22,17 @@ class CategoryForm extends AbstractForm
                         'cols' => 6
                     ],
                 ]);
+
+        $this->formBuilder->add('select', 'locale', trans('admin_panel.languages.single'),
+            [
+                'validationRule' => 'required',
+                'options' => $this->getAppLocales(),
+                'attributes' => [
+                    'placeholder' => trans('admin_panel.languages.select'),
+                    'outlined' => true,
+                    'cols' => 6,
+                ]
+            ]);
 
         $this->formBuilder->add('treeselect', 'parent_id', trans('admin_panel.categories.parent_cat'),
             [

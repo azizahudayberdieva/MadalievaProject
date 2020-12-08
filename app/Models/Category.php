@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\LocaleScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -33,5 +34,10 @@ class Category extends Model
     public function children()
     {
         return $this->hasMany(Category::class, 'parent_id', 'id')->orderBy('order');
+    }
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new LocaleScope);
     }
 }

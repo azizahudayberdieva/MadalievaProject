@@ -8,6 +8,7 @@ use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -40,15 +41,15 @@ class PostController extends Controller
 
     public function store(PostRequest $request): JsonResponse
     {
-        $post = Post::create($request->except('attachment'));
+        $attributes = $request->except('attachment') + ['user_id' => Auth::id()];
 
-        $post->addMedia($request->file('attachment'))->toMediaCollection('files');
+        $post = Post::create($attributes);
 
-        return response()->json(
-            [
-                'message' => 'Запись добавлена',
-                'post' => new PostResource($post->load(['user', 'category', 'media']))
-            ], 200);
+        if ($file = $request->file('attachment')) {
+            $post->addMedia($file)->toMediaCollection('files');
+        }
+
+        return response()->json(['message' => 'Запись добавлена'], 201);
     }
 
     public function show($id): PostResource

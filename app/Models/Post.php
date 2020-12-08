@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\LocaleScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -50,5 +51,10 @@ class Post extends Model implements HasMedia
     public function attachments()
     {
         return $this->morphMany(Attachment::class, 'attachable');
+    }
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new LocaleScope);
     }
 }
