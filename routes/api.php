@@ -25,7 +25,6 @@ Route::resources([
     'users' => 'UserController'
 ]);
 
-Route::resource('translations', 'TranslationsController')->only('index');
-Route::resource('locales', 'LocalesController')->only('index');
+Route::post('post-search-form', '\App\Forms\PostsSearchForm@get');
 
 Route::get('/roles', 'RoleController@index');

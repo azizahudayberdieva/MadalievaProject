@@ -2,13 +2,14 @@
 
 namespace App\Forms;
 
+use App\Forms\Traits\CategoriesWithChildrenTrait;
 use App\Forms\Traits\LocaleTrait;
-use App\Models\Category;
 use App\Models\Post;
 
 class PostForm extends AbstractForm
 {
     use LocaleTrait;
+    use CategoriesWithChildrenTrait;
 
     protected $fieldsDefinitions = [];
 
@@ -65,29 +66,6 @@ class PostForm extends AbstractForm
                 'cols' => 6
             ]
         ]);
-    }
-
-    private function getCategoriesWithChildren()
-    {
-        return Category::with('children')->where('parent_id', '=', null)->get()
-            ->map(function ($cat) {
-                $data = [
-                    'id' => $cat->id,
-                    'name' => $cat->name
-                ];
-
-                if ($cat->children->isNotEmpty()) {
-                    $data['children'] = $cat->children->map(function ($childCat) {
-                        return [
-                            'id' => $childCat->id,
-                            'name' => $childCat->name
-                        ];
-                    });
-                }
-
-                return $data;
-            })
-            ->toArray();
     }
 
     public function fill(Post $post)

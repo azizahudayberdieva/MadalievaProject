@@ -19,7 +19,7 @@ class CategoryForm extends AbstractForm
                     'validationRule' => 'required',
                     'attributes' => [
                         'outlined' => true,
-                        'cols' => 6
+                        'cols' => 12
                     ],
                 ]);
 
@@ -34,7 +34,7 @@ class CategoryForm extends AbstractForm
                 ]
             ]);
 
-        $this->formBuilder->add('treeselect', 'parent_id', trans('admin_panel.categories.parent_cat'),
+        $this->formBuilder->add('select', 'parent_id', trans('admin_panel.categories.parent_cat'),
             [
                 'options' => $this->getParentCategories(),
                 'attributes' => [
@@ -44,6 +44,7 @@ class CategoryForm extends AbstractForm
             ]);
 
         $this->formBuilder->add('number', 'order', trans('admin_panel.order'), [
+            'validationRule' => 'integer',
             'attributes' => [
                 'outlined' => true,
             ]

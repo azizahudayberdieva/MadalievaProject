@@ -58,4 +58,9 @@ return [
         'admin' => 'Ma\'mur',
         'subscriber' => 'Abonent'
     ],
+    "languages" => [
+        "plural" => "Tillar",
+        "single" => "Till",
+        "select" => "Tilni tanlang"
+    ]
 ];
