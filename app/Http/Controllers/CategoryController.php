@@ -32,7 +32,7 @@ class CategoryController extends Controller
     {
         Category::create($request->validated());
 
-        return response()->json(['message' => 'Катеория добавлена'], 200);
+        return response()->json(['message' => trans('crud.category_created')], 200);
     }
 
     public function show(Category $category)
@@ -50,9 +50,9 @@ class CategoryController extends Controller
     {
         $category->fill($request->validated())->save();
 
-        $category->load('posts');
-
-        return $category;
+        return response()->json([
+            'message' => trans('crud.category_updated')
+        ]);
     }
 
     public function destroy(Category $category)
@@ -60,7 +60,7 @@ class CategoryController extends Controller
         $category->delete();
 
         return response()->json([
-            'message' => 'Category Deleted'
+            'message' => trans('crud.category_deleted')
         ]);
     }
 }

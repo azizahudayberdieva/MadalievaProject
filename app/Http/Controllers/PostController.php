@@ -49,7 +49,7 @@ class PostController extends Controller
             $post->addMedia($file)->toMediaCollection('files');
         }
 
-        return response()->json(['message' => 'Запись добавлена'], 201);
+        return response()->json(['message' => trans('crud.post_created')], 201);
     }
 
     public function show($id): PostResource
@@ -71,7 +71,7 @@ class PostController extends Controller
             $post->updateMedia($request->file('attachment'), 'files');
         }
 
-        return response()->json(['message' => 'Запись Обновлена'], 200);
+        return response()->json(['message' => trans('crud.post_updated')], 200);
     }
 
     public function destroy(Post $post): JsonResponse
@@ -84,6 +84,6 @@ class PostController extends Controller
 
         $post->delete();
 
-        return response()->json(['message' => 'Запись удаленна'], 200);
+        return response()->json(['message' => trans('crud.post_deleted')], 200);
     }
 }

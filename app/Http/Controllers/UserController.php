@@ -16,24 +16,11 @@ class UserController extends Controller
         $this->middleware('auth:api', ['except' => ['show', 'index']]);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
     public function index()
     {
         return UserResource::collection(User::with('posts')->get());
     }
 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function store(Request $request): JsonResponse
     {
         $attributes = $request->validate([
@@ -49,33 +36,19 @@ class UserController extends Controller
             $user->assignRole($role);
         }
 
-        return response()->json(['message' => 'Пользователь создан'], 200);
+        return response()->json(['message' => trans('crud.')], 200);
     }
 
     public function create(UserForm $form)
     {
         return response()->json(['form' => $form->get()]);
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param User $user
-     * @return UserResource
-     */
+
     public function show(User $user): UserResource
     {
         return new UserResource($user->load('posts'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param User $user
-     * @return JsonResponse
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function update(Request $request, User $user) : JsonResponse
     {
         $attributes = $this->validate($request, [
@@ -97,23 +70,17 @@ class UserController extends Controller
             $user->assignRole($role);
         }
 
-        return response()->json(['message' => 'Пользователь обновлен'], 200);
+        return response()->json(['message' => trans('crud.user_updated')], 200);
     }
 
     public function edit(User $user, UserForm $form)
     {
         return response()->json(['form' => $form->fill($user)->get()]);
     }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param User $user
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
-     */
+
     protected function destroy(User $user): JsonResponse
     {
         $user->delete();
-        return response()->json(['message' => 'Пользоваетль удален'],200);
+        return response()->json(['message' => trans('crud.user_deleted')],200);
     }
 }
