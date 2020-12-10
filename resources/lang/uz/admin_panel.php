@@ -16,6 +16,8 @@ return [
     'add' => 'Qo\'shish',
     'search' => 'Qidirmoq',
     'order' => 'Buyurtma',
+    'no_options' => 'Variantlar mavjud emas',
+    'no_results' => 'Natija yo\'q',
     'users' => [
         'add' => 'Foydalanuvchini qo\'shish',
         'update' => 'Foydalanuvchi yangilanishi',
