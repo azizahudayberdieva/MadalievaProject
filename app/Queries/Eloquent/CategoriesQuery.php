@@ -13,11 +13,6 @@ class CategoriesQuery implements CategoriesQueryInterface
     /**
      * @var bool
      */
-    private $withChildrenPosts = false;
-
-    /**
-     * @var bool
-     */
     protected $withChildren = false;
 
     /**
@@ -63,7 +58,7 @@ class CategoriesQuery implements CategoriesQueryInterface
     public function getRelations(): array
     {
         if ($this->withChildren) {
-            $this->relations[] = $this->withChildrenPosts ? 'children.posts' : 'children';
+            $this->relations[] = 'children';
         }
 
         if ($this->withPosts) {
@@ -82,12 +77,6 @@ class CategoriesQuery implements CategoriesQueryInterface
     public function setQuerySearch($querySearch): CategoriesQuery
     {
         $this->querySearch = $querySearch;
-        return $this;
-    }
-
-    public function setWithChildrenPosts(bool $withChildrenPosts): CategoriesQuery
-    {
-        $this->withChildrenPosts = $withChildrenPosts;
         return $this;
     }
 }

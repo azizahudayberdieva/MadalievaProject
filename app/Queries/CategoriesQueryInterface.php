@@ -14,7 +14,5 @@ interface CategoriesQueryInterface
 
     public function setQuerySearch($querySearch) : CategoriesQuery;
 
-    public function setWithChildrenPosts(bool $withChildrenPosts) : CategoriesQuery;
-
     public function setWithPosts(bool $withChildrenPosts) : CategoriesQuery;
 }

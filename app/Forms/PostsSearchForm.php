@@ -3,18 +3,9 @@
 namespace App\Forms;
 
 use App\Enums\FileMimeTypes;
-use App\Forms\Traits\CategoriesWithChildrenTrait;
-use Saodat\FormBase\Contracts\FormBuilderInterface;
 
 class PostsSearchForm extends AbstractForm
 {
-    use CategoriesWithChildrenTrait;
-
-    public function __construct(FormBuilderInterface $formBuilder)
-    {
-        parent::__construct($formBuilder);
-    }
-
     protected function buildForm()
     {
         $this->formBuilder->add('treeselect', 'category_id', trans('admin_panel.categories.single'), [
@@ -45,7 +36,7 @@ class PostsSearchForm extends AbstractForm
         ]);
     }
 
-    protected function getAvailableFileTypes()
+    protected function getAvailableFileTypes(): array
     {
         $labels = FileMimeTypes::getLabels();
 

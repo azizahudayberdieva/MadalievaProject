@@ -2,16 +2,12 @@
 
 namespace App\Forms;
 
-use App\Forms\Traits\CategoriesWithChildrenTrait;
 use App\Forms\Traits\LocaleTrait;
 use App\Models\Post;
 
 class PostForm extends AbstractForm
 {
     use LocaleTrait;
-    use CategoriesWithChildrenTrait;
-
-    protected $fieldsDefinitions = [];
 
     protected function buildForm()
     {
@@ -32,6 +28,8 @@ class PostForm extends AbstractForm
                     'placeholder' => trans('admin_panel.categories.single'),
                     'outlined' => true,
                     'cols' => 6,
+                    'no-options-text' => trans('admin_panel.no_options'),
+                    'no-results-text' => trans('admin_panel.no_results')
                 ]
             ]);
 
