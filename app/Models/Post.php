@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Scopes\LocaleScope;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -48,13 +49,18 @@ class Post extends Model implements HasMedia
         return $this->belongsTo(User::class);
     }
 
-    public function attachments()
+    public function attachments(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
         return $this->morphMany(Attachment::class, 'attachable');
     }
 
-    protected static function booted()
+    protected static function booted() : void
     {
         static::addGlobalScope(new LocaleScope);
+    }
+
+    public function getCreatedAtAttribute($attribute): string
+    {
+        return Carbon::parse($attribute)->format('Y-m-d i:m:s');
     }
 }

@@ -6,21 +6,20 @@ use App\Forms\CategoryForm;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Queries\CategoriesQueryInterface;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request, CategoriesQueryInterface $categoriesQuery)
     {
-        //Todo implement pagination
-        if (request()->with_children) {
-            $category = Category::with(['posts', 'children'])
-                ->where('parent_id', '=', NULL)
-                ->get();
-        }else {
-            $category = Category::with(['posts'])->get();
-        }
+        $categories = $categoriesQuery
+            ->setWithChildren(boolval($request->with_children))
+            ->setWithPosts(boolval($request->with_posts))
+            ->setQuerySearch($request->query_search)
+            ->execute($request->per_page, $request->page);
 
-        return CategoryResource::collection($category);
+        return CategoryResource::collection($categories);
     }
 
     public function create(CategoryForm $form)

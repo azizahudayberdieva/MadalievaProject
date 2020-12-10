@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Queries\CategoriesQueryInterface;
+use App\Queries\Eloquent\CategoriesQuery;
+use App\Queries\Eloquent\PostsQuery;
+use App\Queries\Eloquent\UsersQuery;
+use App\Queries\PostsQueryInterface;
+use App\Queries\UsersQueryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(PostsQueryInterface::class, PostsQuery::class);
+        $this->app->bind(CategoriesQueryInterface::class, CategoriesQuery::class);
+        $this->app->bind(UsersQueryInterface::class, UsersQuery::class);
     }
 
     /**

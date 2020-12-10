@@ -6,35 +6,25 @@ use App\Forms\PostForm;
 use App\Http\Requests\PostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
+use App\Queries\PostsQueryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, PostsQueryInterface $postQuery): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $posts = Post::with(['category', 'media']);
-
-        if ($request->category_id) {
-            $posts->whereHas('category', function ($q) use ($request){
-               $q->where('id', $request->category_id);
-               $q->orWhere('parent_id', $request->category_id);;
-            });
-        }
-
-        if ($request->mime_type) {
-            $posts->whereHas('media', function ($q) use ($request) {
-                $q->whereIn('mime_type', $request->mime_type);
-            });
-        }
-
-        $posts = $posts->get();
+        $posts = $postQuery->setCategoryId($request->category_id)
+            ->setAttachmentMimeType($request->mime_type)
+            ->setQuerySearch($request->search)
+            ->setOrderBy($request->orderBy)
+            ->execute($request->per_page, $request->page);
 
         return PostResource::collection($posts);
     }
 
-    public function create(PostForm $form)
+    public function create(PostForm $form): JsonResponse
     {
         return response()->json(['form' => $form->get()]);
     }
@@ -58,12 +48,12 @@ class PostController extends Controller
         return new PostResource($post);
     }
 
-    public function edit(Post $post,PostForm $form)
+    public function edit(Post $post, PostForm $form): JsonResponse
     {
         return response()->json(['form' => $form->fill($post)->get()]);
     }
 
-    public function update(PostRequest $request, Post $post)
+    public function update(PostRequest $request, Post $post): JsonResponse
     {
         $post->fill($request->except('attachment'))->save();
 
@@ -84,6 +74,6 @@ class PostController extends Controller
 
         $post->delete();
 
-        return response()->json(['message' => trans('crud.post_deleted')], 200);
+        return response()->json(['message' => trans('crud.post_deleted')]);
     }
 }

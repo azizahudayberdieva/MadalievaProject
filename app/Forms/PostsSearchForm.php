@@ -22,6 +22,7 @@ class PostsSearchForm extends AbstractForm
             'attributes' => [
                 'cols' => 4,
                 'outlined' => true,
+                'placeholder' => trans('admin_panel.categories.single')
             ]
         ]);
 

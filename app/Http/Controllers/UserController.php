@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Forms\UserForm;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Queries\UsersQueryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -16,9 +17,14 @@ class UserController extends Controller
         $this->middleware('auth:api', ['except' => ['show', 'index']]);
     }
 
-    public function index()
+    public function index(Request $request, UsersQueryInterface $usersQuery): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        return UserResource::collection(User::with('posts')->get());
+        $users = $usersQuery->setQuerySearch($request->query_search)
+            ->setEmail($request->email)
+            ->setName($request->name)
+            ->execute($request->perPage, $request->page);
+
+        return UserResource::collection($users);
     }
 
     public function store(Request $request): JsonResponse
@@ -36,7 +42,7 @@ class UserController extends Controller
             $user->assignRole($role);
         }
 
-        return response()->json(['message' => trans('crud.')], 200);
+        return response()->json(['message' => trans('crud.user_created')], 200);
     }
 
     public function create(UserForm $form)
@@ -49,7 +55,7 @@ class UserController extends Controller
         return new UserResource($user->load('posts'));
     }
 
-    public function update(Request $request, User $user) : JsonResponse
+    public function update(Request $request, User $user): JsonResponse
     {
         $attributes = $this->validate($request, [
             'name' => 'required',
@@ -63,7 +69,7 @@ class UserController extends Controller
             $assignedRoles = $user->roles;
 
             if ($assignedRoles) {
-                $assignedRoles->each(function($assignedRole) use ($user){
+                $assignedRoles->each(function ($assignedRole) use ($user) {
                     $user->removeRole($assignedRole);
                 });
             }
@@ -81,6 +87,6 @@ class UserController extends Controller
     protected function destroy(User $user): JsonResponse
     {
         $user->delete();
-        return response()->json(['message' => trans('crud.user_deleted')],200);
+        return response()->json(['message' => trans('crud.user_deleted')], 200);
     }
 }
