@@ -25,8 +25,7 @@ Route::resources([
     'users' => 'UserController'
 ]);
 
-Route::resource('not-approved-posts', 'NotApprovedPostsController')
-    ->only(['index', 'update', 'edit', 'destroy']);
+Route::resource('approve-post', 'ApprovePostController')->only(['update']);
 
 Route::post('post-search-form', '\App\Forms\PostsSearchForm@get');
 
