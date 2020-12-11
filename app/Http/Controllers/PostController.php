@@ -18,6 +18,7 @@ class PostController extends Controller
         $posts = $postQuery->setCategoryId($request->category_id)
             ->setAttachmentMimeType($request->mime_type)
             ->setQuerySearch($request->search)
+            ->setStatus($request->status)
             ->setOrderBy($request->orderBy)
             ->execute($request->per_page, $request->page);
 
@@ -29,11 +30,11 @@ class PostController extends Controller
         return response()->json(['form' => $form->get()]);
     }
 
-    public function store(PostRequest $request): JsonResponse
+    public function store(PostRequest $request, Post $post): JsonResponse
     {
-        $attributes = $request->except('attachment') + ['user_id' => Auth::id()];
+        $attributes = $request->except('attachment');
 
-        $post = Post::create($attributes);
+        $post = $post->fill($attributes)->save();
 
         if ($file = $request->file('attachment')) {
             $post->addMedia($file)->toMediaCollection('files');
@@ -55,11 +56,11 @@ class PostController extends Controller
 
     public function update(PostRequest $request, Post $post): JsonResponse
     {
-        $post->fill($request->except('attachment'))->save();
-
         if ($request->hasFile('attachment')) {
             $post->updateMedia($request->file('attachment'), 'files');
         }
+
+        $post->fill($request->except('attachment'))->save();
 
         return response()->json(['message' => trans('crud.post_updated')], 200);
     }

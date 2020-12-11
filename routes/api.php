@@ -25,6 +25,9 @@ Route::resources([
     'users' => 'UserController'
 ]);
 
+Route::resource('not-approved-posts', 'NotApprovedPostsController')
+    ->only(['index', 'update', 'edit', 'destroy']);
+
 Route::post('post-search-form', '\App\Forms\PostsSearchForm@get');
 
 Route::get('/roles', 'RoleController@index');

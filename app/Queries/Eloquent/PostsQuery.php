@@ -26,6 +26,10 @@ class PostsQuery implements PostsQueryInterface
      * @var string
      */
     protected $orderBy = 'created_at';
+    /**
+     * @var string|null
+     */
+    protected $status;
 
     public function execute($perPage = 10, $page = 1): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
@@ -41,6 +45,9 @@ class PostsQuery implements PostsQueryInterface
             })
             ->when($this->query_search, function ($query, $query_search) {
                 $query->where('name', 'like', "%$query_search%");
+            })
+            ->when($this->status, function ($query) {
+                $query->where('status', $this->status);
             })
             ->when($this->attachment_mime_type, function ($query, $attachment_mime_type) {
                 $allowedMimeTypes = FileMimeTypes::getValues();
@@ -59,6 +66,12 @@ class PostsQuery implements PostsQueryInterface
         }
 
         $this->orderBy = $orderBy;
+        return $this;
+    }
+
+    public function setStatus(string $status = null) : self
+    {
+        $this->status = $status;
         return $this;
     }
 

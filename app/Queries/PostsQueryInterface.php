@@ -17,4 +17,6 @@ interface PostsQueryInterface
     public function setQuerySearch(string $qs): PostsQuery;
 
     public function setCategoryId(int $categoryId): PostsQuery;
+
+    public function setStatus(string $status): PostsQuery;
 }

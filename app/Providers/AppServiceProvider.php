@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Post;
+use App\Observers\PostObserver;
 use App\Queries\CategoriesQueryInterface;
 use App\Queries\Eloquent\CategoriesQuery;
 use App\Queries\Eloquent\PostsQuery;
@@ -31,6 +33,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Post::observe(PostObserver::class);
     }
 }
