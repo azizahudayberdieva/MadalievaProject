@@ -18,6 +18,7 @@ return [
     'order' => 'Buyurtma',
     'no_options' => 'Variantlar mavjud emas',
     'no_results' => 'Natija yo\'q',
+    'not_found' => 'Foydalanuvchi topilmadi',
     'users' => [
         'add' => 'Foydalanuvchini qo\'shish',
         'update' => 'Foydalanuvchi yangilanishi',

@@ -51,7 +51,7 @@ class AuthController extends Controller
             return $this->respondWithToken($token);
         }
 
-        return response()->json(['message' => 'Пользователь не найден!'], 422);
+        return response()->json(['message' => trans('admin_panel.users.not_found')], 422);
     }
 
     /**
@@ -75,7 +75,7 @@ class AuthController extends Controller
     {
         $this->guard()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => trans('auth.logout')]);
     }
 
     /**
@@ -98,10 +98,7 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         return response()->json([
-            'user' => new UserResource($this->guard()->user()),
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => $this->guard()->factory()->getTTL() * 3600
+            'token' => $token,
         ]);
     }
 
