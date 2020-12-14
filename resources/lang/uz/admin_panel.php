@@ -59,7 +59,8 @@ return [
     ],
     'roles' => [
         'admin' => 'Ma\'mur',
-        'subscriber' => 'Abonent'
+        'subscriber' => 'Abonent',
+        'manager' => 'Menejer'
     ],
     "languages" => [
         "plural" => "Tillar",

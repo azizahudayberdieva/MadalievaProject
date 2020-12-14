@@ -58,8 +58,9 @@ return [
         'file_extension' => 'Расширение файла',
     ],
     'roles' => [
-      'admin' => 'Администратор',
-      'subscriber' => 'Подписчик'
+        'admin' => 'Администратор',
+        'subscriber' => 'Подписчик',
+        'manager' => 'Менеджер'
     ],
     'languages' => [
         'single' => 'Язык',
