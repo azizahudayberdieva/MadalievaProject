@@ -30,11 +30,12 @@ class PostController extends Controller
         return response()->json(['form' => $form->get()]);
     }
 
-    public function store(PostRequest $request, Post $post): JsonResponse
+    public function store(PostRequest $request, Post $post)
     {
         $attributes = $request->except('attachment');
 
-        $post = $post->fill($attributes)->save();
+        $post->fill($attributes)->save();
+        $post->refresh();
 
         if ($file = $request->file('attachment')) {
             $post->addMedia($file)->toMediaCollection('files');

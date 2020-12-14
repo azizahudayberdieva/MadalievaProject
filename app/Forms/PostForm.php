@@ -61,7 +61,8 @@ class PostForm extends AbstractForm
         $this->formBuilder->add('file', 'attachment', trans('admin_panel.posts.file'), [
             //'validationRule' => 'required',
             'attributes' => [
-                'cols' => 6
+                'cols' => 12,
+                'helpText' => trans('admin_panel.attachments.drag_files_here'),
             ]
         ]);
     }
