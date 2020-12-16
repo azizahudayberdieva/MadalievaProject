@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Scopes\LocaleScope;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -13,8 +14,6 @@ class Category extends Model
         'order' => 'nullable|integer',
         'parent_id' => 'nullable|integer',
     ];
-
-    protected $dateFormat = 'Y-m-d H:m';
 
     protected $guarded = [];
 
@@ -39,5 +38,10 @@ class Category extends Model
     protected static function booted()
     {
         static::addGlobalScope(new LocaleScope);
+    }
+
+    public function getCreatedAtAttribute($attribute): string
+    {
+        return Carbon::parse($attribute)->format('Y-m-d H:i');
     }
 }

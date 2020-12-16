@@ -60,11 +60,18 @@ return [
     'roles' => [
         'admin' => 'Ma\'mur',
         'subscriber' => 'Abonent',
-        'manager' => 'Menejer'
+        'manager' => 'Menejer',
+        'office_employee' => 'Ofis xodimi',
+        'production_employee' => 'Ishlab chiqarish xodimi',
     ],
     "languages" => [
         "plural" => "Tillar",
         "single" => "Till",
         "select" => "Tilni tanlang"
+    ],
+    'access_type' => [
+        'label' => 'Kirish darajasi',
+        'office' => 'Ofis uchun',
+        'production' => 'Ishlab chiqarish uchun',
     ]
 ];

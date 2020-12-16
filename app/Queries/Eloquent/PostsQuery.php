@@ -26,19 +26,39 @@ class PostsQuery implements PostsQueryInterface
      * @var string
      */
     protected $orderBy = 'created_at';
+
+    /**
+     * @var string
+     */
+    protected $access_types = [];
     /**
      * @var string|null
      */
     protected $status;
 
-    public function execute($perPage = 10, $page = 1): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    public function __construct(int $category_id = null,
+                                array $access_type = [],
+                                string $status = null,
+                                string $attachment_mime_type = null,
+                                string $query_search = null,
+                                string $orderBy = null)
+    {
+        $this->category_id = $category_id;
+        $this->attachment_mime_type = $attachment_mime_type;
+        $this->query_search = $query_search;
+        $this->orderBy = $orderBy;
+        $this->access_types = $access_type;
+        $this->status = $status;
+    }
+
+    public function execute(int $perPage = 10, int $page = 1): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
         $orderBy = $this->orderBy ?? 'created_at';
         $direction = $this->orderBy === 'created_at' ? 'desc' : 'asc';
 
         return Post::with(['category', 'media'])
             ->when($this->category_id, function ($query, $category_id) {
-                $query->whereHas('category', function ($q) use ($category_id){
+                $query->whereHas('category', function ($q) use ($category_id) {
                     $q->where('id', $category_id);
                     $q->orWhere('parent_id', $category_id);;
                 });
@@ -55,6 +75,7 @@ class PostsQuery implements PostsQueryInterface
                     $q->whereIn('mime_type', $allowedMimeTypes[$attachment_mime_type]);
                 });
             })
+            ->whereIn('access_type', $this->access_types)
             ->orderBy($orderBy, $direction)
             ->paginate($perPage, $columns = ['*'], $pageName = 'page', $page);
     }
@@ -69,7 +90,7 @@ class PostsQuery implements PostsQueryInterface
         return $this;
     }
 
-    public function setStatus(string $status = null) : self
+    public function setStatus(string $status = null): self
     {
         $this->status = $status;
         return $this;
@@ -90,6 +111,12 @@ class PostsQuery implements PostsQueryInterface
     public function setCategoryId(int $categoryId = null): self
     {
         $this->category_id = $categoryId;
+        return $this;
+    }
+
+    public function setAccessTypes(array $accessTypes) : self
+    {
+        $this->access_types = $accessTypes;
         return $this;
     }
 }

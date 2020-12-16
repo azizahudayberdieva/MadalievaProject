@@ -30,8 +30,24 @@ class CategoriesQuery implements CategoriesQueryInterface
      */
     protected $relations = [];
 
+    protected $orderBy;
+
+    public function __construct(string $querySearch = null,
+                                bool $withChildren = false,
+                                bool $withPosts = false,
+                                string $orderBy = null)
+    {
+
+        $this->querySearch = $querySearch;
+        $this->withChildren = $withChildren;
+        $this->withPosts = $withPosts;
+        $this->orderBy = $orderBy;
+    }
+
     public function execute($perPage = 15, $page = 1): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
+        $direction = $this->orderBy === 'created_at' ? 'desc' : 'asc';
+
         $query = $this->getQuery()
             ->when($this->withChildren, function ($query) use (&$relations) {
                 $query->where('parent_id', '=', NULL);
@@ -39,7 +55,8 @@ class CategoriesQuery implements CategoriesQueryInterface
             ->when($this->querySearch, function ($query, $qs) {
                 $query->where('name', 'like', "%$qs%")
                     ->orWhere('created_at', 'like', "%$qs%");
-            });
+            })
+            ->orderBy($this->orderBy, $direction);
 
         return $query->paginate($perPage, $columns = ['*'], $pageName = 'page', $page);
     }
@@ -50,7 +67,7 @@ class CategoriesQuery implements CategoriesQueryInterface
         return $this;
     }
 
-    public function getQuery() : Builder
+    public function getQuery(): Builder
     {
         return $this->getRelations() ? Category::with($this->relations) : Category::query();
     }
@@ -77,6 +94,12 @@ class CategoriesQuery implements CategoriesQueryInterface
     public function setQuerySearch($querySearch): CategoriesQuery
     {
         $this->querySearch = $querySearch;
+        return $this;
+    }
+
+    public function setOrderBy($orderBy): self
+    {
+        $this->orderBy = $orderBy;
         return $this;
     }
 }

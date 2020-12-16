@@ -13,11 +13,7 @@ class CategoryController extends Controller
 {
     public function index(Request $request, CategoriesQueryInterface $categoriesQuery)
     {
-        $categories = $categoriesQuery
-            ->setWithChildren(boolval($request->with_children))
-            ->setWithPosts(boolval($request->with_posts))
-            ->setQuerySearch($request->query_search)
-            ->execute($request->per_page, $request->page);
+        $categories = $categoriesQuery->execute($request->per_page, $request->page);
 
         return CategoryResource::collection($categories);
     }
@@ -47,7 +43,7 @@ class CategoryController extends Controller
 
     public function update(CategoryRequest $request, Category $category)
     {
-        $category->fill($request->validated())->save();
+        $category->update($request->validated());
 
         return response()->json([
             'message' => trans('crud.category_updated')

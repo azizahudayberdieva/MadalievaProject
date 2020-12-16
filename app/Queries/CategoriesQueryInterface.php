@@ -8,7 +8,7 @@ use App\Queries\Eloquent\CategoriesQuery;
 
 interface CategoriesQueryInterface
 {
-    public function execute(): \Illuminate\Contracts\Pagination\LengthAwarePaginator;
+    public function execute(int $perPage, int $page): \Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
     public function setWithChildren(bool $bool): CategoriesQuery;
 

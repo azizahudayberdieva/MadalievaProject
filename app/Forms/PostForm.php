@@ -2,6 +2,7 @@
 
 namespace App\Forms;
 
+use App\Enums\AccessTypes;
 use App\Forms\Traits\LocaleTrait;
 use App\Models\Post;
 
@@ -33,15 +34,20 @@ class PostForm extends AbstractForm
                 ]
             ]);
 
-        $this->formBuilder->add('select', 'locale', trans('admin_panel.languages.single'),
+        $this->formBuilder->add('select', 'access_type', trans('admin_panel.access_type.label'),
             [
                 'validationRule' => 'required',
-                'options' => $this->getAppLocales(),
+                'options' => collect(AccessTypes::getTypes())->map(function($value) {
+                    return [
+                        'id' => $value,
+                        'name' => trans("admin_panel.access_type.$value")
+                    ];
+                }),
                 'attributes' => [
-                    'placeholder' => trans('admin_panel.languages.select'),
                     'outlined' => true,
-                    'cols' => 6,
-                ]
+                    'cols' => 6
+                ],
+                'value' => AccessTypes::OFFICE
             ]);
 
         $this->formBuilder->add('textarea', 'excerpt', trans('admin_panel.posts.short_description'), [

@@ -15,6 +15,7 @@ class PostObserver
         $post->user_id = $user->id;
 
         $post->status = $user->can('publish_posts') ? PostStatuses::PUBLISHED : PostStatuses::PENDING;
+        $post->locale = app()->getLocale();
 
         $post->saveQuietly();
     }

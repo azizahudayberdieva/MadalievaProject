@@ -8,7 +8,7 @@ use App\Queries\Eloquent\PostsQuery;
 
 interface PostsQueryInterface
 {
-    public function execute(): \Illuminate\Contracts\Pagination\LengthAwarePaginator;
+    public function execute(int $perPage, int $page): \Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
     public function setOrderBy(string $orderBy): PostsQuery;
 
@@ -19,4 +19,6 @@ interface PostsQueryInterface
     public function setCategoryId(int $categoryId): PostsQuery;
 
     public function setStatus(string $status): PostsQuery;
+
+    public function setAccessTypes(array $accessTypes): PostsQuery;
 }

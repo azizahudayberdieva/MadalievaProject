@@ -23,32 +23,14 @@ class CategoryForm extends AbstractForm
                     ],
                 ]);
 
-        $this->formBuilder->add('select', 'locale', trans('admin_panel.languages.single'),
-            [
-                'validationRule' => 'required',
-                'options' => $this->getAppLocales(),
-                'attributes' => [
-                    'placeholder' => trans('admin_panel.languages.select'),
-                    'outlined' => true,
-                    'cols' => 6,
-                ]
-            ]);
-
         $this->formBuilder->add('select', 'parent_id', trans('admin_panel.categories.parent_cat'),
             [
                 'options' => $this->getParentCategories(),
                 'attributes' => [
                     'outlined' => true,
-                    'cols' => 6
+                    'cols' => 12
                 ],
             ]);
-
-        $this->formBuilder->add('number', 'order', trans('admin_panel.order'), [
-            'validationRule' => 'integer',
-            'attributes' => [
-                'outlined' => true,
-            ]
-        ]);
     }
 
     private function getParentCategories()

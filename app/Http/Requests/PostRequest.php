@@ -23,11 +23,10 @@ class PostRequest extends AbstractRequest
      */
     public function rules(): array
     {
-        return [];
         $rules = Post::RULES;
 
         if (in_array($this->getMethod(), ['PUT', 'PATCH'])) {
-            $rules['attachment'] = 'mimes:docx,pdf,mp4,flv|max:512000';
+            $rules['attachment'] = ['nullable', 'mimes:docx,pdf,mp4,flv', 'max:512000'];
         }
 
         return $rules;

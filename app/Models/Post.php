@@ -20,14 +20,12 @@ class Post extends Model implements HasMedia
      */
     public const RULES = [
         'name' => 'required|string',
-        'user_id' => 'required|exists:App\Models\User,id',
         'category_id' => 'required|exists:App\Models\Category,id',
         'attachment' => 'required|mimes:pptx,doc,docx,mp4,flv,xlsx,max:5120000',
         'excerpt' => 'required|string|max:255',
-        //'full_description' => 'required|string|max:5000'
+        'full_description' => 'required|string|max:5000'
     ];
 
-    protected $dateFormat = 'Y-m-d h:m';
     /**
      * @var string[]
      */
@@ -61,6 +59,6 @@ class Post extends Model implements HasMedia
 
     public function getCreatedAtAttribute($attribute): string
     {
-        return Carbon::parse($attribute)->format('Y-m-d i:m:s');
+        return Carbon::parse($attribute)->format('Y-m-d H:i');
     }
 }

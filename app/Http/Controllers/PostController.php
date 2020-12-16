@@ -9,18 +9,12 @@ use App\Models\Post;
 use App\Queries\PostsQueryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
     public function index(Request $request, PostsQueryInterface $postQuery): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $posts = $postQuery->setCategoryId($request->category_id)
-            ->setAttachmentMimeType($request->mime_type)
-            ->setQuerySearch($request->search)
-            ->setStatus($request->status)
-            ->setOrderBy($request->orderBy)
-            ->execute($request->per_page, $request->page);
+        $posts = $postQuery->execute($request->per_page, $request->page);
 
         return PostResource::collection($posts);
     }
@@ -57,11 +51,14 @@ class PostController extends Controller
 
     public function update(PostRequest $request, Post $post): JsonResponse
     {
-        if ($request->hasFile('attachment')) {
-            $post->updateMedia($request->file('attachment'), 'files');
+        $attributes = collect($request->validated());
+
+        if ($file = $request->file('attachment')) {
+            $post->media()->delete();
+            $post->addMedia($file)->toMediaCollection('files');;
         }
 
-        $post->fill($request->except('attachment'))->save();
+        $post->update($attributes->except('attachment')->toArray());
 
         return response()->json(['message' => trans('crud.post_updated')], 200);
     }

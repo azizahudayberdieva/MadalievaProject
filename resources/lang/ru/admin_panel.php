@@ -60,10 +60,17 @@ return [
     'roles' => [
         'admin' => 'Администратор',
         'subscriber' => 'Подписчик',
-        'manager' => 'Менеджер'
+        'manager' => 'Менеджер',
+        'office_employee' => 'Офисный сотрудник',
+        'production_employee' => 'Производственный сотрудник',
     ],
     'languages' => [
         'single' => 'Язык',
         'select' => 'Выберите язык'
     ],
+    'access_type' => [
+        'label' => 'Уровень доступа',
+        'office' => 'Для офиса',
+        'production' => 'Для Производтсва',
+    ]
 ];

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\AccessTypes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,6 +14,7 @@ class User extends Authenticatable implements JWTSubject
     use Notifiable;
     use HasRoles;
 
+    protected $guard_name = 'api';
     /**
      * The attributes that are mass assignable.
      *
@@ -71,5 +73,26 @@ class User extends Authenticatable implements JWTSubject
     public function posts() : HasMany
     {
         return $this->hasMany(Post::class);
+    }
+
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    public function accessLevel(): array
+    {
+        if ($this->hasAllPermissions(['view_office_posts', 'view_production_posts'])) {
+            return AccessTypes::getTypes();
+        }
+
+        if ($this->hasPermissionTo('view_office_posts')) {
+            return [AccessTypes::OFFICE];
+        }
+
+        if ($this->hasPermissionTo('view_production_posts')) {
+            return [AccessTypes::PRODUCTION];
+        }
+
+        return [];
     }
 }
