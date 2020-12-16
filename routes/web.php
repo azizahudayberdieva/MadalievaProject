@@ -32,7 +32,7 @@ Route::get('/', function () {
 //    ]);
 //
 //    $subsRole = Spatie\Permission\Models\Role::find(2);
-//    $subsRole->givePermissionTo(['view_posts', 'view_office_posts', 'view_categories']);
+//    $subsRole->givePermissionTo(['view_posts', 'view_office_posts', 'view_production_posts', 'view_categories']);
 //
 //    $productionEmployee = Spatie\Permission\Models\Role::create([
 //        'name' => 'production_employee'
