@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Traits\TimeMutators;
 use App\Scopes\LocaleScope;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
+    use TimeMutators;
+
     public const RULES = [
         'name' => 'required|string',
         'order' => 'nullable|integer',
@@ -38,10 +40,5 @@ class Category extends Model
     protected static function booted()
     {
         static::addGlobalScope(new LocaleScope);
-    }
-
-    public function getCreatedAtAttribute($attribute): string
-    {
-        return Carbon::parse($attribute)->format('Y-m-d H:i');
     }
 }

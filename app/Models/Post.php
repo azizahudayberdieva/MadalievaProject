@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Traits\TimeMutators;
 use App\Scopes\LocaleScope;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -12,7 +12,7 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 class Post extends Model implements HasMedia
 {
     use HasMediaTrait;
-
+    use TimeMutators;
     /**
      * Rules for validation Video model
      *
@@ -57,8 +57,5 @@ class Post extends Model implements HasMedia
         static::addGlobalScope(new LocaleScope);
     }
 
-    public function getCreatedAtAttribute($attribute): string
-    {
-        return Carbon::parse($attribute)->format('Y-m-d H:i');
-    }
+
 }

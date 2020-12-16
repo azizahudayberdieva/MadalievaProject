@@ -86,7 +86,7 @@ class User extends Authenticatable implements JWTSubject
         }
 
         if ($this->hasPermissionTo('view_office_posts')) {
-            return [AccessTypes::OFFICE];
+            return AccessTypes::getTypes();
         }
 
         if ($this->hasPermissionTo('view_production_posts')) {
