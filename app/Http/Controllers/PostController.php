@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Forms\PostForm;
 use App\Http\Requests\PostRequest;
+use App\Http\Resources\MediaResource;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Queries\PostsQueryInterface;
@@ -46,6 +47,8 @@ class PostController extends Controller
 
     public function edit(Post $post, PostForm $form): JsonResponse
     {
+        $post->attachment = MediaResource::collection($post->media);
+
         return response()->json(['form' => $form->fill($post)->get()]);
     }
 
