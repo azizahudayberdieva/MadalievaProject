@@ -47,7 +47,7 @@ class PostForm extends AbstractForm
                     'outlined' => true,
                     'cols' => 6
                 ],
-                'value' => AccessTypes::OFFICE
+                'value' => AccessTypes::ALL
             ]);
 
         $this->formBuilder->add('textarea', 'excerpt', trans('admin_panel.posts.short_description'), [

@@ -12,6 +12,6 @@ return [
     |
     */
 
-    'failed'   => 'Bunday maʼlumotlarga ega foydalanuvchi mavjud emas.',
-    'throttle' => 'Kirish uchun juda ko‘p urinishlar aniqlandi. Iltimos :seconds soniyadan so‘ng yana urinib ko‘ring.',
+    'failed'   => 'Бундай маʼлумотларга эга фойдаланувчи мавжуд эмас.',
+    'throttle' => 'Кириш учун жуда кўп уринишлар аниқланди. Илтимос :seconds сониядан сўнг яна уриниб кўринг.',
 ];

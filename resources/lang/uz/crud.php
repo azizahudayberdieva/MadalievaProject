@@ -2,15 +2,15 @@
 
 
 return [
-    'post_created' => 'Kirish muvaffaqiyatli yaratildi',
-    'post_updated' => 'Kirish muvaffaqiyatli yangilandi',
-    'post_deleted' => 'Kirish muvaffaqiyatli o\'chirildi',
+    'post_created' => 'Мавзу муваффақиятли яратилди',
+    'post_updated' => 'Мавзу муваффақиятли янгиланди',
+    'post_deleted' => 'Мавзу муваффақиятли ўчирилди',
 
-    'category_created' => 'Kategoriya muvaffaqiyatli yaratildi',
-    'category_updated' => 'Kategoriya muvaffaqiyatli yangilandi',
-    'category_deleted' => 'Kategoriya o\'chirildi',
+    'category_created' => 'Тоифа муваффақиятли яратилди',
+    'category_updated' => 'Тоифа муваффақиятли янгиланди',
+    'category_deleted' => 'Тоифа муваффақиятли ўчирилди',
 
-    'user_created' => 'Foydalanuvchi muvaffaqiyatli yaratildi',
-    'user_updated' => 'Foydalanuvchi muvaffaqiyatli yangilandi',
-    'user_deleted' => 'Foydalanuvchi muvaffaqiyatli o\'chirildi',
+    'user_created' => 'Фойдаланувчи муваффақиятли яратилди',
+    'user_updated' => 'Фойдаланувчи муваффақиятли янгиланди',
+    'user_deleted' => 'Фойдаланувчи муваффақиятли ўчирилди',
 ];
