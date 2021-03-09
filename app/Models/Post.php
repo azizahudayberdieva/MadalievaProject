@@ -21,7 +21,7 @@ class Post extends Model implements HasMedia
     public const RULES = [
         'name' => 'required|string',
         'category_id' => 'required|exists:App\Models\Category,id',
-        'attachment' => 'required|mimes:pptx,doc,docx,mp4,flv,xlsx,max:5120000',
+        'attachment' => 'required|mimes:pptx,doc,docx,mp4,flv,xlsx,pdf|max:5120000',
         'excerpt' => 'required|string|max:255',
         'full_description' => 'required|string|max:5000'
     ];
